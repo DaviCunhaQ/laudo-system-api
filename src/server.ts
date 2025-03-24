@@ -1,5 +1,9 @@
-import express from "express"
+import express, { Request, Response, Router } from "express";
+import { routes } from "./routes";
 
-const app = express()
+const app = express();
 
-app.listen(3333 , () => console.log("Server is running!"))
+app.use(express.json());
+app.use(routes);
+
+app.listen(3333, () => console.log("Server is running!"));
