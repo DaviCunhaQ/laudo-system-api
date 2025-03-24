@@ -1,0 +1,155 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRoles {
+  SUPERADMIN // Super Administrador
+  ADMIN // Administrador
+  USER // Usuário
+}
+
+enum ParticipationRole {
+  PASSAGEIRO
+  PEDESTRE
+  TESTEMUNHA
+}
+
+enum IncidentStatus {
+  SEM_FERIMENTOS
+  FERIDO
+  OBITO
+}
+
+enum OccurrenceStaus {
+  ABERTO // EM ABERTO
+  ENCERRADO // CASO ENCERRADO
+  EM_PROGRESSO // EM PROGRESSO
+}
+
+enum TrafficImpact {
+  BLOQUEIO_TOTAL // Bloqueio total da via, nenhum veículo pode passar
+  BLOQUEIO_PARCIAL // Bloqueio parcial, apenas algumas faixas estão obstruídas
+  TRANSITO_LENTO // Trânsito lento, mas sem bloqueios diretos
+  DESVIO_NECESSARIO // Necessidade de desvio, motoristas precisam mudar de rota
+  CONGESTIONAMENTO_INTENSO // Congestionamento intenso, fluxo de veículos muito comprometido
+  CONGESTIONAMENTO_MODERADO // Congestionamento moderado, impacto no tráfego, mas ainda fluindo
+  CONGESTIONAMENTO_LEVE // Congestionamento leve, atrasos pequenos no tráfego
+  SEM_IMPACTO // Sem impacto no tráfego, fluxo normal de veículos
+}
+
+model User {
+  id         String    @id @default(cuid())
+  name       String
+  email      String    @unique
+  password   String
+  role       UserRoles @default(USER)
+  resetToken String?   @map("reset_token")
+
+  @@map("users")
+}
+
+model Occurrence {
+  id             String          @id
+  category       String
+  subcategory    String?
+  description    String
+  comments       String
+  details        String
+  accompaniment  String
+  status         OccurrenceStaus
+  materialDamage String          @map("material_damage")
+  trafficImpact  String          @map("traffic_impact")
+
+  registeredAt DateTime @map("registered_at")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  drivers      Driver[]
+  location     Location?
+  vehicles     Vehicle[]
+  participants IncidentParticipan[]
+  authorities  Authority[]
+
+  @@map("occurrences")
+}
+
+model Location {
+  id           String  @id @default(cuid())
+  occurrenceId String  @unique @map("occurrence_id")
+  street       String
+  number       String?
+  neighborhood String?
+  city         String
+  state        String
+  geolocation  String
+  reference    String?
+
+  occurrence Occurrence @relation(fields: [occurrenceId], references: [id], onDelete: Cascade)
+
+  @@map("locations")
+}
+
+model Driver {
+  id           String     @id @default(cuid())
+  vehicleId    String
+  occurrenceId String     @map("occurrence_id")
+  name         String?
+  contact      String?
+  isLicensed   Boolean?   @map("is_licensed")
+  occurrence   Occurrence @relation(fields: [occurrenceId], references: [id], onDelete: Cascade)
+  vehicle      Vehicle    @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+
+  @@map("drivers")
+}
+
+model Vehicle {
+  id           String  @id
+  occurrenceId String  @map("occurrence_id")
+  plate        String? @unique
+  model        String?
+  color        String?
+
+  occurrence Occurrence @relation(fields: [occurrenceId], references: [id], onDelete: Cascade)
+  Driver     Driver[]
+
+  @@map("vehicles")
+}
+
+model IncidentParticipan {
+  id            String             @id @default(cuid())
+  occurrenceId  String             @map("occurrence_id")
+  name          String?
+  contact       String?
+  description   String?
+  participation ParticipationRole?
+  status        IncidentStatus?
+
+  occurrence Occurrence @relation(fields: [occurrenceId], references: [id], onDelete: Cascade)
+
+  @@map("incident_participants")
+}
+
+model Authority {
+  id           String  @id @default(cuid())
+  occurrenceId String  @map("occurrence_id")
+  name         String?
+  serviceTime  String? @map("service_time")
+  providences  String?
+
+  occurrence Occurrence @relation(fields: [occurrenceId], references: [id], onDelete: Cascade)
+
+  @@map("authorities")
+}
+
+model Drafts {
+  id        String   @id @default(cuid())
+  formData  Json     @map("form_data")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("drafts")
+}
