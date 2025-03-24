@@ -16,9 +16,9 @@ async function bootstrap() {
   patchNestJsSwagger()
 
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('Api Sistema de trânsito')
+    .setTitle('Api sistema de laudos')
     .setDescription(
-      'API para registrar ocorrências de acidentes de trânsito na cidade de Massapê',
+      'API para facilitar a criação dos laudos',
     )
     .setVersion('1.0')
     .build()
