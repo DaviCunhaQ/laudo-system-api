@@ -1,10 +1,12 @@
 import { Router, Request, Response } from "express";
 import { UsersController } from "../controllers/UsersController";
+import { ensureAuthenticate } from "../middlewares/ensureAuthenticate";
 
 const usersRoutes: Router = Router();
 const controller = new UsersController();
 
-// Rotas
+// Rotas Autenticadas
+usersRoutes.use(ensureAuthenticate)
 usersRoutes.get("/", controller.list);
 usersRoutes.get("/:id", controller.show);
 usersRoutes.post("/", controller.create);
