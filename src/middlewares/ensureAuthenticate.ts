@@ -17,7 +17,7 @@ export function ensureAuthenticate(
   const [_,token] = authHeader.split(' ')
 
   try {
-    const payload = verify(token, "minhachavesecreta")
+    const payload = verify(token, process.env.PASSWORD_TOKEN || "minhachavesecreta")
     next()
   } catch (error) {
     throw new AppError("Token inválido", 401)
