@@ -22,9 +22,9 @@ export class UsersController {
       name: user.name,
       email: user.email,
       id: user
-    } : { message: "User not found" };
+    } : { message: "Usuário não encontrado" };
 
-    res.status(200).json(userToShow);
+    res.status(user ? 200 : 400).json(userToShow);
     return;
   }
 
