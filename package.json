@@ -1,6 +1,9 @@
 {
   "name": "laudo-system-api",
   "version": "1.0.0",
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
   "main": "index.js",
   "scripts": {
     "dev": "tsx src/server.ts",
@@ -28,6 +31,7 @@
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.13.11",
     "prisma": "^6.5.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
   }
 }

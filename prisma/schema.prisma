@@ -22,3 +22,20 @@ model User {
   @@map("users")
 }
 
+model SoType{
+  id String @id @default(uuid())
+  code String @unique
+  service_value Float?
+  days_limit Int
+
+  @@map("service_types")
+}
+
+model City{
+  id String @id @default(uuid())
+  identify String @unique
+  name String
+  displacement_value Float
+
+  @@map("cities")
+}
