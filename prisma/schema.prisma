@@ -29,6 +29,7 @@ model SoType{
   days_limit Int
 
   @@map("service_types")
+  ServiceOrder ServiceOrder[]
 }
 
 model City{
@@ -38,4 +39,60 @@ model City{
   displacement_value Float
 
   @@map("cities")
+  ServiceOrder ServiceOrder[]
+}
+
+model ServiceOrder {
+  id String @id @default(uuid())
+  company String
+  order_number Int
+  so_type SoType @relation(fields: [order_type], references: [id])
+  order_type String
+  client_name String
+  order_city City @relation(fields: [city] , references: [id])
+  city String
+  rgi_registration String
+  opening_date DateTime
+  service_value Float
+  displacement_value Float
+  contact_name String
+  contact_number String
+  property_type String?
+  property_status String?
+  cpf String?
+  cnpj String?
+  registration_on_system String?
+  siopi_coincides String?
+  registration_type String?
+  registration_date DateTime
+  averbation_exists Boolean
+  mandatory_documents String[]
+  built_area_presents String?
+  dwell_registration_compare String[]
+  art_registration_compare String[]
+  dec_registration_compare String[]
+  cep String
+  street String
+  number String
+  neighborhood String
+  block String
+  batch String
+  complement String
+  coordenates String
+  minimal_documentation String[]
+  pls_verifications String[]
+  pls_built_situation String?
+  total_measured Int?
+  more_accurate_informations String[]
+  pci_verifications String[]
+  pci_art_compare String[]
+  project_permit_verifications String[]
+  built_area Float?
+  terrain_area Float?
+  rooms_number Int?
+  bathrooms_number Int?
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  @@map("service_orders")
 }
