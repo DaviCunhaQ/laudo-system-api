@@ -5,28 +5,28 @@ import { AppError } from "../errors/AppError";
 import z from "zod"
 import {hash} from "bcrypt"
 
-export class OrderServiceController {
+export class DraftsController {
   public async list(_req: Request, res: Response) {
     
-    const serviceOrders = await prisma.serviceOrder.findMany()
-    res.status(200).json(serviceOrders);
+    const drafts = await prisma.draft.findMany()
+    res.status(200).json(drafts);
     return;
   }
 
   public async show (req: Request, res: Response) {
     
     const { id } = req.params;
-    const serviceOrder = await prisma.serviceOrder.findUnique({
+    const draft = await prisma.draft.findUnique({
       where: {
         id: id
       }
     });
 
-    if (!serviceOrder){
-      throw new AppError("Ordem de serviço não encontrada",404)
+    if (!draft){
+      throw new AppError("Rascunho não encontrado.",404)
     }
 
-    res.status(200).json(serviceOrder);
+    res.status(200).json(draft);
     return;
   }
 
@@ -117,18 +117,18 @@ export class OrderServiceController {
     
     const { id } = req.params;
 
-    const serviceOrder = prisma.serviceOrder.findUnique({
+    const draft = prisma.draft.findUnique({
       where: {id}
     })
 
-    if (!serviceOrder){
-      throw new AppError("Ordem de serviço não encontrada.", 404)
+    if (!draft){
+      throw new AppError("Rascunho não encontrado.", 404)
     }
 
-    await prisma.serviceOrder.delete({
+    await prisma.draft.delete({
       where: { id }
     });
-    res.status(201).json({message: "Ordem de serviço deletada com sucesso!"});
+    res.status(201).json({message: "Rascunho deletado com sucesso!"});
     return;
   }
 }
