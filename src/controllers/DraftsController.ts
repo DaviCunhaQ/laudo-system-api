@@ -32,13 +32,34 @@ export class DraftsController {
   }
 
   public async create (req: Request, res: Response) {
-    const bodyParsed = DraftSchema.parse(req.body);
-    const draft = await prisma.draft.create({
-      data: bodyParsed
-    });
-
-    res.status(201).json({message: "Rascunho criado com sucesso!" , data: draft});
-    return;
+    const {city , order_type , ...rest} = DraftSchema.parse(req.body);
+    if (city && order_type){
+      const finalCity = await prisma.city.findUnique({
+        where: { id: city }
+      })
+      const finalSoType = await prisma.soType.findUnique({
+        where: { id: order_type }
+      })
+      const finalPrice = (finalCity?.displacement_value as number) + (finalSoType?.service_value as number)
+      const draft = await prisma.draft.create({
+        data: {
+          city,
+          order_type,
+          service_value: finalPrice,
+          ...rest
+        }
+      });
+      res.status(201).json({message: "Rascunho criado com sucesso!" , data: draft});
+      return;
+    }else{
+      const draft = await prisma.draft.create({
+        data: {
+          ...rest
+        }
+      });
+      res.status(201).json({message: "Rascunho criado com sucesso!" , data: draft});
+      return;
+    }
   }
   
   public async update (req: Request, res: Response) {

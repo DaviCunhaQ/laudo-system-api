@@ -33,10 +33,25 @@ export class OrderServiceController {
 
   public async create (req: Request, res: Response) {
     
-    const bodyParsed = ServiceOrderSchema.parse(req.body);
+    const {city: cityId, order_type: soTypeId , ...rest} = ServiceOrderSchema.parse(req.body);
+
+    const finalCity = await prisma.city.findUnique({
+      where: { id: cityId }
+    })
+
+    const finalSoType = await prisma.soType.findUnique({
+      where: {id: soTypeId}
+    })
+
+    const finalPrice = (finalCity?.displacement_value as number) + (finalSoType?.service_value as number)
 
     const orderService = await prisma.serviceOrder.create({
-      data: bodyParsed
+      data: {
+        service_value: finalPrice,
+        city: cityId,
+        order_type: soTypeId,
+        ...rest
+      }
     })
 
     res.status(201).json({message: "Ordem de serviço criada com sucesso!" , data: orderService});
