@@ -54,7 +54,7 @@ model ServiceOrder {
   order_city City @relation(fields: [city] , references: [id])
   city String
   rgi_registration String
-  opening_date DateTime
+  opening_date String
   service_value Float
   displacement_value Float
   contact_name String
@@ -66,7 +66,7 @@ model ServiceOrder {
   registration_on_system String?
   siopi_coincides String?
   registration_type String?
-  registration_date DateTime
+  registration_date String
   averbation_exists Boolean
   mandatory_documents String[] @default([])
   built_area_presents String?
@@ -109,7 +109,7 @@ model Draft {
   order_city City? @relation(fields: [city] , references: [id])
   city String?
   rgi_registration String?
-  opening_date DateTime?
+  opening_date String?
   service_value Float?
   displacement_value Float?
   contact_name String?
@@ -121,7 +121,7 @@ model Draft {
   registration_on_system String?
   siopi_coincides String?
   registration_type String?
-  registration_date DateTime?
+  registration_date String?
   averbation_exists Boolean?
   mandatory_documents String[] @default([])
   built_area_presents String?
