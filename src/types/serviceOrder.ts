@@ -9,7 +9,6 @@ export const ServiceOrderSchema = z.object({
   city: z.string(),
   rgi_registration: z.string(),
   opening_date: z.date(),
-  displacement_value: z.number(),
   contact_name: z.string(),
   contact_number: z.string(),
   property_type: z.string().nullable(),

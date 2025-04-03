@@ -40,12 +40,12 @@ export class DraftsController {
       const finalSoType = await prisma.soType.findUnique({
         where: { id: order_type }
       })
-      const finalPrice = (finalCity?.displacement_value as number) + (finalSoType?.service_value as number)
       const draft = await prisma.draft.create({
         data: {
           city,
           order_type,
-          service_value: finalPrice,
+          service_value: finalSoType?.service_value as number,
+          displacement_value: finalCity?.displacement_value as number,
           ...rest
         }
       });

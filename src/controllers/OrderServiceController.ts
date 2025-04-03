@@ -42,12 +42,11 @@ export class OrderServiceController {
     const finalSoType = await prisma.soType.findUnique({
       where: {id: soTypeId}
     })
-
-    const finalPrice = (finalCity?.displacement_value as number) + (finalSoType?.service_value as number)
-
+    
     const orderService = await prisma.serviceOrder.create({
       data: {
-        service_value: finalPrice,
+        service_value: finalSoType?.service_value as number,
+        displacement_value: finalCity?.displacement_value as number,  
         city: cityId,
         order_type: soTypeId,
         ...rest
