@@ -68,11 +68,11 @@ model ServiceOrder {
   registration_type String?
   registration_date DateTime
   averbation_exists Boolean
-  mandatory_documents String[]
+  mandatory_documents String[] @default([])
   built_area_presents String?
-  dwell_registration_compare String[]
-  art_registration_compare String[]
-  dec_registration_compare String[]
+  dwell_registration_compare String[] @default([])
+  art_registration_compare String[] @default([])
+  dec_registration_compare String[] @default([])
   cep String
   street String
   number String
@@ -81,14 +81,14 @@ model ServiceOrder {
   batch String
   complement String
   coordenates String
-  minimal_documentation String[]
-  pls_verifications String[]
+  minimal_documentation String[] @default([])
+  pls_verifications String[] @default([])
   pls_built_situation String?
   total_measured Int?
-  more_accurate_informations String[]
-  pci_verifications String[]
-  pci_art_compare String[]
-  project_permit_verifications String[]
+  more_accurate_informations String[] @default([])
+  pci_verifications String[] @default([])
+  pci_art_compare String[] @default([])
+  project_permit_verifications String[] @default([])
   built_area Float?
   terrain_area Float?
   rooms_number Int?
@@ -123,11 +123,11 @@ model Draft {
   registration_type String?
   registration_date DateTime?
   averbation_exists Boolean?
-  mandatory_documents String[]
+  mandatory_documents String[] @default([])
   built_area_presents String?
-  dwell_registration_compare String[]
-  art_registration_compare String[]
-  dec_registration_compare String[]
+  dwell_registration_compare String[] @default([])
+  art_registration_compare String[] @default([])
+  dec_registration_compare String[] @default([])
   cep String?
   street String?
   number String?
@@ -136,14 +136,14 @@ model Draft {
   batch String?
   complement String?
   coordenates String?
-  minimal_documentation String[]
-  pls_verifications String[]
+  minimal_documentation String[] @default([])
+  pls_verifications String[] @default([])
   pls_built_situation String?
   total_measured Int?
-  more_accurate_informations String[]
-  pci_verifications String[]
-  pci_art_compare String[]
-  project_permit_verifications String[]
+  more_accurate_informations String[] @default([])
+  pci_verifications String[] @default([])
+  pci_art_compare String[] @default([])
+  project_permit_verifications String[] @default([])
   built_area Float?
   terrain_area Float?
   rooms_number Int?
