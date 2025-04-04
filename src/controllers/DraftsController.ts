@@ -32,7 +32,7 @@ export class DraftsController {
   }
 
   public async create (req: Request, res: Response) {
-    const {city , order_type , ...rest} = DraftSchema.parse(req.body);
+    const {city , order_type , service_value , displacement_value, ...rest} = DraftSchema.parse(req.body);
     if (city && order_type){
       const finalCity = await prisma.city.findUnique({
         where: { id: city }
@@ -44,8 +44,8 @@ export class DraftsController {
         data: {
           city,
           order_type,
-          service_value: finalSoType?.service_value as number,
-          displacement_value: finalCity?.displacement_value as number,
+          service_value: finalSoType?.service_value ? finalSoType.service_value : service_value,
+          displacement_value: finalSoType?.service_value? finalCity?.displacement_value : displacement_value,  
           ...rest
         }
       });

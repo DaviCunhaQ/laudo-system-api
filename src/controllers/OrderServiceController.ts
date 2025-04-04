@@ -33,7 +33,7 @@ export class OrderServiceController {
 
   public async create (req: Request, res: Response) {
     
-    const {city: cityId, order_type: soTypeId , ...rest} = ServiceOrderSchema.parse(req.body);
+    const {city: cityId, order_type: soTypeId , service_value , displacement_value, ...rest} = ServiceOrderSchema.parse(req.body);
 
     const finalCity = await prisma.city.findUnique({
       where: { id: cityId }
@@ -45,8 +45,8 @@ export class OrderServiceController {
     
     const orderService = await prisma.serviceOrder.create({
       data: {
-        service_value: finalSoType?.service_value as number,
-        displacement_value: finalCity?.displacement_value as number,  
+        service_value: finalSoType?.service_value ? finalSoType.service_value as number : service_value as number,
+        displacement_value: finalSoType?.service_value? finalCity?.displacement_value as number : displacement_value as number,  
         city: cityId,
         order_type: soTypeId,
         ...rest

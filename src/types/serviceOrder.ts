@@ -7,6 +7,8 @@ export const ServiceOrderSchema = z.object({
   client_name: z.string(),
   city: z.string().uuid(),
   rgi_registration: z.string(),
+  service_value: z.number().optional(),
+  displacement_value: z.number().optional(),
   opening_date: z.string().datetime(),
   contact_name: z.string(),
   contact_number: z.string(),
