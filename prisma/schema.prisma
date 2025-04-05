@@ -47,7 +47,7 @@ model City{
 model ServiceOrder {
   id String @id @default(uuid())
   company String
-  order_number Int
+  order_number String
   so_type SoType @relation(fields: [order_type], references: [id])
   order_type String
   client_name String
@@ -102,7 +102,7 @@ model ServiceOrder {
 model Draft {
   id String @id @default(uuid())
   company String?
-  order_number Int?
+  order_number String?
   so_type SoType? @relation(fields: [order_type], references: [id])
   order_type String?
   client_name String?

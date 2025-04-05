@@ -8,9 +8,9 @@ const serviceTypes = [
   { code: 'B437', days_limit: 15, service_value: 716 },
   { code: 'A413', days_limit: 6, service_value: 466 },
   { code: 'G401', days_limit: 4 },
-  { code: 'G402', days_limit: 3, service_value: 100 },
-  { code: 'G416', days_limit: 5, service_value: 200 },
-  { code: 'G415', days_limit: 5, service_value: 132 },
+  { code: 'G402', days_limit: 3 },
+  { code: 'G416', days_limit: 5 },
+  { code: 'G415', days_limit: 5 },
   { code: 'G403', days_limit: 4 }
 ];
 

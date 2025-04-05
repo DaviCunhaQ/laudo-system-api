@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const ServiceOrderSchema = z.object({
   company: z.string(),
-  order_number: z.number().int(),
+  order_number: z.string(),
   order_type: z.string().uuid(),
   client_name: z.string(),
   city: z.string().uuid(),
