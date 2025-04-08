@@ -86,6 +86,7 @@ model ServiceOrder {
   pls_built_situation String?
   total_measured Int?
   more_accurate_informations String[] @default([])
+  mandatory_documents_to_b String[] @default([])
   pci_verifications String[] @default([])
   pci_art_compare String[] @default([])
   project_permit_verifications String[] @default([])

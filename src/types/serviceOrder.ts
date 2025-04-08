@@ -39,6 +39,7 @@ export const ServiceOrderSchema = z.object({
   pls_built_situation: z.string().optional(),
   total_measured: z.number().int().optional(),
   more_accurate_informations: z.array(z.string()).optional(),
+  mandatory_documents_to_b: z.array(z.string()).optional(),
   pci_verifications: z.array(z.string()).optional(),
   pci_art_compare: z.array(z.string()).optional(),
   project_permit_verifications: z.array(z.string()).optional(),
