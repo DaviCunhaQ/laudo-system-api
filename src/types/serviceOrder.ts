@@ -28,7 +28,7 @@ export const ServiceOrderSchema = z.object({
   dec_registration_compare: z.array(z.string()).optional(),
   cep: z.string(),
   street: z.string(),
-  number: z.string(),
+  number: z.number(),
   neighborhood: z.string(),
   block: z.string(),
   batch: z.string(),

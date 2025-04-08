@@ -75,7 +75,7 @@ model ServiceOrder {
   dec_registration_compare String[] @default([])
   cep String
   street String
-  number String
+  number Int
   neighborhood String
   block String
   batch String
@@ -131,7 +131,7 @@ model Draft {
   dec_registration_compare String[] @default([])
   cep String?
   street String?
-  number String?
+  number Int?
   neighborhood String?
   block String?
   batch String?
@@ -142,6 +142,7 @@ model Draft {
   pls_built_situation String?
   total_measured Int?
   more_accurate_informations String[] @default([])
+  mandatory_documents_to_b String[] @default([])
   pci_verifications String[] @default([])
   pci_art_compare String[] @default([])
   project_permit_verifications String[] @default([])
