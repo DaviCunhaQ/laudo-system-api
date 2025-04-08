@@ -67,7 +67,7 @@ model ServiceOrder {
   siopi_coincides String?
   registration_type String?
   registration_date String
-  averbation_exists Boolean
+  averbation_exists Boolean?
   mandatory_documents String[] @default([])
   built_area_presents String?
   dwell_registration_compare String[] @default([])
