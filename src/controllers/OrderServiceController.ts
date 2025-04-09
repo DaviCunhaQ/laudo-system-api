@@ -60,12 +60,12 @@ export class OrderServiceController {
   public async update (req: Request, res: Response) {
     const { id } = req.params;
     const bodyParsed = DraftSchema.parse(req.body);
-    await prisma.user.update({
+    await prisma.serviceOrder.update({
       where: { id },
       data: bodyParsed
     });
 
-    res.status(201).json({message: "Ordem de serviço atualizada com sucesso!"});
+    res.status(200).json({message: "Ordem de serviço atualizada com sucesso!"});
     return;
   }
 

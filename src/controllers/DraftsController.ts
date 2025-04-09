@@ -65,13 +65,13 @@ export class DraftsController {
   public async update (req: Request, res: Response) {
     const { id } = req.params;
     const bodyParsed = DraftSchema.parse(req.body);
-    await prisma.user.update({
+    await prisma.draft.update({
       where: { id },
       data: bodyParsed
     });
 
     
-    res.status(201).json({message: "Rascunho atualizado com sucesso!"});
+    res.status(200).json({message: "Rascunho atualizado com sucesso!"});
     return;
   }
 

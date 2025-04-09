@@ -121,7 +121,7 @@ export class UsersController {
     }
 
     
-    res.status(201).json({message: "Usuário atualizado com sucesso!"});
+    res.status(200).json({message: "Usuário atualizado com sucesso!"});
     return;
   }
 
