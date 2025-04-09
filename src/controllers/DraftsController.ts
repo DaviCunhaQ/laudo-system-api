@@ -32,33 +32,45 @@ export class DraftsController {
   }
 
   public async create (req: Request, res: Response) {
-    const {city , order_type , service_value , displacement_value, ...rest} = DraftSchema.parse(req.body);
-    if (city && order_type){
-      const finalCity = await prisma.city.findUnique({
-        where: { id: city }
-      })
-      const finalSoType = await prisma.soType.findUnique({
-        where: { id: order_type }
-      })
-      const draft = await prisma.draft.create({
-        data: {
-          city,
-          order_type,
-          service_value: finalSoType?.service_value ? finalSoType.service_value : service_value,
-          displacement_value: finalSoType?.service_value? finalCity?.displacement_value : displacement_value,  
-          ...rest
-        }
+    const { id } = req.params;
+    if (id){
+      const bodyParsed = DraftSchema.parse(req.body);
+      await prisma.draft.update({
+        where: { id },
+        data: bodyParsed
       });
-      res.status(201).json({message: "Rascunho criado com sucesso!" , data: draft});
+      
+      res.status(200).json({message: "Rascunho atualizado com sucesso!"});
       return;
     }else{
-      const draft = await prisma.draft.create({
-        data: {
-          ...rest
-        }
-      });
-      res.status(201).json({message: "Rascunho criado com sucesso!" , data: draft});
-      return;
+      const {city , order_type , service_value , displacement_value, ...rest} = DraftSchema.parse(req.body);
+      if (city && order_type){
+        const finalCity = await prisma.city.findUnique({
+          where: { id: city }
+        })
+        const finalSoType = await prisma.soType.findUnique({
+          where: { id: order_type }
+        })
+        const draft = await prisma.draft.create({
+          data: {
+            city,
+            order_type,
+            service_value: finalSoType?.service_value ? finalSoType.service_value : service_value,
+            displacement_value: finalSoType?.service_value? finalCity?.displacement_value : displacement_value,  
+            ...rest
+          }
+        });
+        res.status(201).json({message: "Rascunho criado com sucesso!" , data: draft});
+        return;
+      }else{
+        const draft = await prisma.draft.create({
+          data: {
+            ...rest
+          }
+        });
+        res.status(201).json({message: "Rascunho criado com sucesso!" , data: draft});
+        return;
+      }
     }
   }
   

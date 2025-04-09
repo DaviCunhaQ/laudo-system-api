@@ -9,7 +9,7 @@ const controller = new DraftsController();
 draftRoutes.use(ensureAuthenticate)
 draftRoutes.get("/", controller.list);
 draftRoutes.get("/:id", controller.show);
-draftRoutes.post("/", controller.create);
+draftRoutes.post("/:id?", controller.create);
 draftRoutes.put("/:id", controller.update);
 draftRoutes.delete("/:id", controller.delete);
 
