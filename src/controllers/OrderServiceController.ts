@@ -9,7 +9,9 @@ import { DraftSchema, ServiceOrderSchema } from "../types";
 export class OrderServiceController {
   public async list(_req: Request, res: Response) {
     
-    const serviceOrders = await prisma.serviceOrder.findMany()
+    const serviceOrders = await prisma.serviceOrder.findMany({
+      orderBy: {created_at: "desc"}
+    })
     res.status(200).json(serviceOrders);
     return;
   }
