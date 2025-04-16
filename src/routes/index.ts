@@ -5,7 +5,7 @@ import { orderServiceRoutes } from "./orderServiceRoutes";
 import { loginRoutes } from "./loginRoutes";
 import { citiesRoutes } from "./citiesRoutes";
 import { osTypesRoutes } from "./osTypesRoutes";
-import { draftRoutes } from "./draftRoutes";
+// import { draftRoutes } from "./draftRoutes";
 
 const routes: Router = Router();
 
@@ -16,7 +16,7 @@ routes.use('/users' , usersRoutes)
 routes.use('/service-order', orderServiceRoutes)
 routes.use('/cities', citiesRoutes)
 routes.use('/service-order-types', osTypesRoutes)
-routes.use('/drafts', draftRoutes)
+// routes.use('/drafts', draftRoutes)
 
 
 export { routes };

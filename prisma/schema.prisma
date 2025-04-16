@@ -30,7 +30,7 @@ model SoType{
 
   @@map("service_types")
   ServiceOrder ServiceOrder[]
-  Draft Draft[]
+  // Draft Draft[]
 }
 
 model City{
@@ -41,15 +41,18 @@ model City{
 
   @@map("cities")
   ServiceOrder ServiceOrder[]
-  Draft Draft[]
+  // Draft Draft[]
 }
 
 model ServiceOrder {
   id String @id @default(uuid())
   company String
-  order_number String
+  status String
+  concluded_date String?
+  order_number String @unique
   so_type SoType @relation(fields: [order_type], references: [id])
   order_type String
+  date_expire String
   client_name String
   order_city City @relation(fields: [city] , references: [id])
   city String
@@ -59,6 +62,8 @@ model ServiceOrder {
   displacement_value Float
   contact_name String
   contact_number String
+  hello_message String
+  form_message String
   property_type String?
   property_status String?
   cpf String?
@@ -74,62 +79,6 @@ model ServiceOrder {
   art_registration_compare String[] @default([])
   dec_registration_compare String[] @default([])
   cep String
-  street String
-  number Int
-  neighborhood String
-  block String
-  batch String
-  complement String
-  coordenates String
-  minimal_documentation String[] @default([])
-  pls_verifications String[] @default([])
-  pls_built_situation String?
-  total_measured Int?
-  more_accurate_informations String[] @default([])
-  mandatory_documents_to_b String[] @default([])
-  pci_verifications String[] @default([])
-  pci_art_compare String[] @default([])
-  project_permit_verifications String[] @default([])
-  built_area Float?
-  terrain_area Float?
-  rooms_number Int?
-  bathrooms_number Int?
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now()) @updatedAt
-
-  @@map("service_orders")
-}
-
-model Draft {
-  id String @id @default(uuid())
-  company String?
-  order_number String?
-  so_type SoType? @relation(fields: [order_type], references: [id])
-  order_type String?
-  client_name String?
-  order_city City? @relation(fields: [city] , references: [id])
-  city String?
-  rgi_registration String?
-  opening_date String?
-  service_value Float?
-  displacement_value Float?
-  contact_name String?
-  contact_number String?
-  property_type String?
-  property_status String?
-  cpf String?
-  cnpj String?
-  registration_on_system String?
-  siopi_coincides String?
-  registration_type String?
-  registration_date String?
-  averbation_exists Boolean?
-  mandatory_documents String[] @default([])
-  built_area_presents String?
-  dwell_registration_compare String[] @default([])
-  art_registration_compare String[] @default([])
-  dec_registration_compare String[] @default([])
-  cep String?
   street String?
   number Int?
   neighborhood String?
@@ -153,8 +102,68 @@ model Draft {
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
 
-  @@map("drafts")
+  @@map("service_orders")
 }
+
+// model ClientForm {
+//   id String @id @default(uuid())
+//}
+
+// model Draft {
+//   id String @id @default(uuid())
+//   company String?
+//   order_number String?
+//   so_type SoType? @relation(fields: [order_type], references: [id])
+//   order_type String?
+//   client_name String?
+//   order_city City? @relation(fields: [city] , references: [id])
+//   city String?
+//   rgi_registration String?
+//   opening_date String?
+//   service_value Float?
+//   displacement_value Float?
+//   contact_name String?
+//   contact_number String?
+//   property_type String?
+//   property_status String?
+//   cpf String?
+//   cnpj String?
+//   registration_on_system String?
+//   siopi_coincides String?
+//   registration_type String?
+//   registration_date String?
+//   averbation_exists Boolean?
+//   mandatory_documents String[] @default([])
+//   built_area_presents String?
+//   dwell_registration_compare String[] @default([])
+//   art_registration_compare String[] @default([])
+//   dec_registration_compare String[] @default([])
+//   cep String?
+//   street String?
+//   number Int?
+//   neighborhood String?
+//   block String?
+//   batch String?
+//   complement String?
+//   coordenates String?
+//   minimal_documentation String[] @default([])
+//   pls_verifications String[] @default([])
+//   pls_built_situation String?
+//   total_measured Int?
+//   more_accurate_informations String[] @default([])
+//   mandatory_documents_to_b String[] @default([])
+//   pci_verifications String[] @default([])
+//   pci_art_compare String[] @default([])
+//   project_permit_verifications String[] @default([])
+//   built_area Float?
+//   terrain_area Float?
+//   rooms_number Int?
+//   bathrooms_number Int?
+//   created_at DateTime @default(now())
+//   updated_at DateTime @default(now()) @updatedAt
+
+//   @@map("drafts")
+// }
 
 
 

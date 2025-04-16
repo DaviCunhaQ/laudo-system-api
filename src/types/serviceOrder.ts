@@ -51,6 +51,24 @@ export const ServiceOrderSchema = z.object({
 
 export type ServiceOrderSchema = z.infer<typeof ServiceOrderSchema>
 
+export const CreateServiceOrderSchema = z.object({
+  company: z.string(),
+  order_number: z.string(),
+  order_type: z.string().uuid(),
+  client_name: z.string(),
+  city: z.string().uuid(),
+  rgi_registration: z.string(),
+  service_value: z.number().optional(),
+  displacement_value: z.number().optional(),
+  opening_date: z.string(),
+  contact_name: z.string(),
+  contact_number: z.string(),
+  cep: z.string(),
+  form_link: z.string()
+});
+
+export type CreateServiceOrderSchema = z.infer<typeof CreateServiceOrderSchema>
+
 export const DraftSchema = ServiceOrderSchema.partial();
 
 export type DraftSchema = z.infer<typeof DraftSchema>

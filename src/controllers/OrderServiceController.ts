@@ -4,7 +4,7 @@ import prisma from "../lib/prisma";
 import { AppError } from "../errors/AppError";
 import z from "zod"
 import {hash} from "bcrypt"
-import { DraftSchema, ServiceOrderSchema } from "../types";
+import { CreateServiceOrderSchema, DraftSchema, ServiceOrderSchema } from "../types";
 
 export class OrderServiceController {
   public async list(_req: Request, res: Response) {
@@ -35,7 +35,7 @@ export class OrderServiceController {
 
   public async create (req: Request, res: Response) {
     
-    const {city: cityId, order_type: soTypeId , service_value , displacement_value, ...rest} = ServiceOrderSchema.parse(req.body);
+    const {city: cityId, order_type: soTypeId , form_link, service_value , displacement_value, contact_name, company, order_number, cep, client_name, contact_number, opening_date, rgi_registration} = CreateServiceOrderSchema.parse(req.body);
 
     const finalCity = await prisma.city.findUnique({
       where: { id: cityId }
@@ -44,14 +44,32 @@ export class OrderServiceController {
     const finalSoType = await prisma.soType.findUnique({
       where: {id: soTypeId}
     })
-    
+
+    const helloMessage = `Olá ${contact_name} Estamos assessorando a empresa ${company}, credenciada da Caixa Econômica e recebemos a ordem de serviço (O.S) de N° ${order_number} do tipo ${finalSoType?.code} ,do cliente  ${client_name}. Em breve será feita a análise inicial da documentação e qualquer problema ou atualização no processo entraremos em contato.`
+    const formMessage = `Para agilizar o atendimento, desenvolvemos um questionário para ser preenchido com algumas informações básicas. Este questionário não é obrigatório, mas ajuda a equipe técnica a adiantar a redação do laudo. Segue o link: [Questionário](${form_link})`
+    const now = new Date()
+    const futureDate = new Date(now)
+    futureDate.setDate(now.getDate() + (finalSoType?.days_limit as number));
+    const date_expire = futureDate.toLocaleDateString('pt-BR');
+
     const orderService = await prisma.serviceOrder.create({
       data: {
         service_value: finalSoType?.service_value ? finalSoType.service_value as number : service_value as number,
         displacement_value: finalSoType?.service_value? finalCity?.displacement_value as number : displacement_value as number,  
         city: cityId,
         order_type: soTypeId,
-        ...rest
+        status: "LAUNCHED",
+        order_number,
+        client_name,
+        cep,
+        company,
+        contact_name,
+        contact_number,
+        opening_date,
+        rgi_registration,
+        date_expire,
+        form_message: formMessage,
+        hello_message: helloMessage
       }
     })
 
