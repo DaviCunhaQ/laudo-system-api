@@ -2,10 +2,13 @@ import { z } from "zod";
 
 export const ServiceOrderSchema = z.object({
   company: z.string(),
+  status: z.string(),
   order_number: z.string(),
   order_type: z.string().uuid(),
   client_name: z.string(),
   city: z.string().uuid(),
+  hello_message: z.string().optional(),
+  form_message: z.string().optional(),
   rgi_registration: z.string(),
   service_value: z.number().optional(),
   displacement_value: z.number().optional(),
