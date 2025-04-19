@@ -37,6 +37,12 @@ export class OrderServiceController {
     
     const {city: cityId, order_type: soTypeId , form_link, service_value , displacement_value, contact_name, company, order_number, cep, client_name, contact_number, opening_date, rgi_registration} = CreateServiceOrderSchema.parse(req.body);
 
+    const orderExists = await prisma.serviceOrder.findUnique({
+      where: {order_number}
+    })
+
+    if(orderExists) throw new AppError("O.S. já cadastrada!", 400)
+
     const finalCity = await prisma.city.findUnique({
       where: { id: cityId }
     })
