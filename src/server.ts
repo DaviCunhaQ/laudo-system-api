@@ -25,7 +25,7 @@ app.use((error: Error, req: Request , res: Response, next: NextFunction)=>{
   if (error instanceof ZodError){
     res.status(500).json({
       message: "Formato de Envio da Requisição Inválida.",
-      erors: error.message
+      errors: error.message
     })
     return 
   }
