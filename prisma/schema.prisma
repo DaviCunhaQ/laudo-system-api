@@ -89,7 +89,7 @@ model ServiceOrder {
   minimal_documentation String[] @default([])
   pls_verifications String[] @default([])
   pls_built_situation String?
-  total_measured Int?
+  total_measured Float?
   more_accurate_informations String[] @default([])
   mandatory_documents_to_b String[] @default([])
   pci_verifications String[] @default([])
