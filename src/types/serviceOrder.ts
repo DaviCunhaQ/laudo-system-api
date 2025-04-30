@@ -50,6 +50,9 @@ export const ServiceOrderSchema = z.object({
   terrain_area: z.number().optional(),
   rooms_number: z.number().int().optional(),
   bathrooms_number: z.number().int().optional(),
+  finish_message: z.string(),
+  address: z.string(),
+  location_link: z.string().optional()
 });
 
 export type ServiceOrderSchema = z.infer<typeof ServiceOrderSchema>
@@ -67,6 +70,7 @@ export const CreateServiceOrderSchema = z.object({
   contact_name: z.string(),
   contact_number: z.string(),
   cep: z.string(),
+  address: z.string(),
   form_link: z.string()
 });
 

@@ -64,6 +64,9 @@ model ServiceOrder {
   contact_number String
   hello_message String
   form_message String
+  finish_message String @default("")
+  address String @default("")
+  location_link String?
   property_type String?
   property_status String?
   cpf String?

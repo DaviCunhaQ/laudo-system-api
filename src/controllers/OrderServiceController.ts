@@ -35,7 +35,7 @@ export class OrderServiceController {
 
   public async create (req: Request, res: Response) {
     
-    const {city: cityId, order_type: soTypeId , form_link, service_value , displacement_value, contact_name, company, order_number, cep, client_name, contact_number, opening_date, rgi_registration} = CreateServiceOrderSchema.parse(req.body);
+    const {city: cityId, order_type: soTypeId , form_link, service_value , displacement_value, contact_name, company, order_number, cep, client_name, contact_number, opening_date, rgi_registration, address} = CreateServiceOrderSchema.parse(req.body);
 
     const orderExists = await prisma.serviceOrder.findUnique({
       where: {order_number}
@@ -53,6 +53,7 @@ export class OrderServiceController {
 
     const helloMessage = `Olá ${contact_name} Estamos assessorando a empresa ${company}, credenciada da Caixa Econômica e recebemos a ordem de serviço (O.S) de N° ${order_number} do tipo ${finalSoType?.code} ,do cliente  ${client_name}. Em breve será feita a análise inicial da documentação e qualquer problema ou atualização no processo entraremos em contato.`
     const formMessage = `Para agilizar o atendimento, desenvolvemos um questionário para ser preenchido com algumas informações básicas. Este questionário não é obrigatório, mas ajuda a equipe técnica a adiantar a redação do laudo. Segue o link: [Questionário](${form_link})`
+    const finish_message = `Oi, o seu laudo de nº ${order_number}, do cliente ${client_name}, está concluído e já se encontra no sistema da caixa. Procure sua agência ou seu correspondente bancário, qualquer dúvida estamos a disposição.`
     const now = new Date()
     const futureDate = new Date(now)
     futureDate.setDate(now.getDate() + (finalSoType?.days_limit as number));
@@ -75,7 +76,9 @@ export class OrderServiceController {
         rgi_registration,
         date_expire,
         form_message: formMessage,
-        hello_message: helloMessage
+        hello_message: helloMessage,
+        address,
+        finish_message
       }
     })
 
