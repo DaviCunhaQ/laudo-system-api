@@ -52,7 +52,9 @@ export const ServiceOrderSchema = z.object({
   bathrooms_number: z.number().int().optional(),
   finish_message: z.string(),
   address: z.string(),
-  location_link: z.string().optional()
+  location_link: z.string().optional(),
+  concluded_date: z.string().optional(),
+  photos_status: z.string()
 });
 
 export type ServiceOrderSchema = z.infer<typeof ServiceOrderSchema>

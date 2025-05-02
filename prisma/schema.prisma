@@ -49,6 +49,7 @@ model ServiceOrder {
   company String
   status String
   concluded_date String?
+  photos_status String @default("Pendente")
   order_number String @unique
   so_type SoType @relation(fields: [order_type], references: [id])
   order_type String
