@@ -4,13 +4,13 @@ const prisma = new PrismaClient()
 
 export async function devSeed(){
   await prisma.user.upsert({
-    where: { email: 'davicunha1983@gmail.com' },
+    where: { email: process.env.DEV_EMAIL },
     update: {},
     create: {
-      email: 'davicunha1983@gmail.com',
+      email: process.env.DEV_EMAIL as string,
       name: 'Davi',
       role: 'Dev',
-      password: 'DaviDev123'
+      password: process.env.DEV_HASH_PASSWORD as string
     },
   })
 }

@@ -72,8 +72,8 @@ export const CreateServiceOrderSchema = z.object({
   contact_name: z.string(),
   contact_number: z.string(),
   cep: z.string(),
-  address: z.string(),
-  form_link: z.string()
+  form_link: z.string(),
+  address: z.string()
 });
 
 export type CreateServiceOrderSchema = z.infer<typeof CreateServiceOrderSchema>

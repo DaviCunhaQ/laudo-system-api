@@ -8,5 +8,6 @@ const controller = new CitiesController();
 // Rotas
 citiesRoutes.use(ensureAuthenticate)
 citiesRoutes.get("/", controller.list);
+citiesRoutes.post("/", controller.create)
 
 export { citiesRoutes };
